@@ -1,0 +1,15 @@
+#!/opt/software/perl/bin/perl
+
+use v5.16.1;
+use Config::General;
+
+BEGIN{
+	die "Please set remoteViz env\n" unless defined $ENV{'remoteViz_ROOT'};
+	
+	#set lib path
+	push @INC, "$ENV{'remoteViz_ROOT'}/lib";
+}
+
+use RemoteViz;
+
+RemoteViz->run();
