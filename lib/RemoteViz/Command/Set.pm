@@ -3,6 +3,8 @@ package RemoteViz::Command::Set;
 use base qw( CLI::Framework::Command );
 use v5.16.1;
 
+my $supported_args = "password";
+
 #return usage output
 sub usage_text{
     my $usage = <<EOF;
@@ -14,7 +16,7 @@ password
             
 example:
 #set vnc password
-remoteViz set password
+remoteViz set $supported_args
 
 EOF
 }
@@ -24,6 +26,10 @@ sub validate{
     
     if(defined $cmd_opts->{'help'}){
         die $self->usage_text();
+    }
+    
+    unless(defined $args[0]){
+   		die $self->usage_text();
     } 
 }
 
@@ -37,8 +43,16 @@ sub option_spec {
 sub run{
 	my ($self, $opts, @args) = @_;
    
-   my $obj;
+   use TurboVNC;
+   my $obj = TurboVNC->new();
    
+   if($args[0] =~ /\bpassword\b/i){
+   		$obj->set_passwd();
+   }else{
+   		say "$args[0] not supported on set command";
+   		say "try set $supported_args";
+   		exit 255;
+   }
    
    return;
 }

@@ -39,6 +39,37 @@ sub option_spec {
 sub run{
 	my ($self, $opts, @args) = @_;
    
+   my $opt;
+   
+   if($opts->{'g'}){
+   		$opt = 1;	
+   }
+   if($opts->{'d'}){
+   		$opt = 2;	
+   }
+   if(($opts->{'d'}) and $opts->{'g'}){
+   		$opt = 3;	
+   }
+   
+   use TurboVNC;
+   
+   my $obj = TurboVNC->new();
+   
+   given($opt){
+   		when(3){
+   			$obj->set_vncserver($opts->{'g'},$opts->{'d'});
+   		}
+   		when(2){
+   			$obj->set_vncserver(undef,$opts->{'d'});
+   		}
+   		when(1){
+   			$obj->set_vncserver($opts->{'g'},undef);
+   		}
+   		default {
+   			$obj->set_vncserver();
+   		}
+   }
+   
    return;
 }
 
