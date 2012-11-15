@@ -82,7 +82,56 @@ sub set_vncserver{
 	
 	$self->check_geometry($geometry);
 	
-	say "$depth $prefix $geometry $description";
+	system qq#$vncserver -geometry $geometry -name "$prefix - $description" -depth $depth#;
+}
+
+sub stop_vnc{
+	my $self = shift;
+	
+	my $id = shift;
+	
+	my $conf = $self->globalcfg;
+	my $vncserver = "$$conf{turbovnc}/bin/vncserver";
+	my $cmd = `$vncserver -kill :$id`;
+
+}
+
+sub list_vnc{
+	my $self = shift;
+	
+	my $cmd = `ps x -o command | grep 'desktop Novaglobal' | grep -v grep`;
+	print "no visualization detected\n" and exit 1 unless $cmd;
+	my @vnc = split '\n' => $cmd;
+	
+	$self->print_header();
+	
+	for(@vnc){
+        print $self->get_session($_) . "\n";
+	}
+}
+
+sub get_session{
+	my $self = shift;
+    my $line = shift;
+
+    my ($id, $desc, $port, $geometry, $session);
+    if($line =~ /.*Novaglobal - (.*)-httpd.*-geometry (.*)-depth.*-rfbport (\d+)?/){
+            $desc = $1;
+            $geometry = $2;
+            $port = $3;
+            $id = $port - 5900;
+    }
+    $session = "$id\t$port\t$geometry\t$desc";
+    return $session;
+}
+
+
+sub print_header{
+	my $self = shift;
+	
+    print "ID\tPort\tGeometry\tDescription\n";
+    print "=" x 50;
+    print "\n";
 }
 
 1;

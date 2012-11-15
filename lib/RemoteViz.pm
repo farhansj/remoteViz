@@ -48,6 +48,8 @@ sub command_map {
     'cmd-list'  => 'CLI::Framework::Command::List',
     request		=> 'RemoteViz::Command::Request',
     set			=> 'RemoteViz::Command::Set',
+    list		=> 'RemoteViz::Command::List',
+    stop		=> 'RemoteViz::Command::Stop',
 }
 
 sub command_alias {
@@ -55,6 +57,7 @@ sub command_alias {
     # (the values should be found as "keys" in command_map()).
     sh  => 'console',
     req => 'request',
+    ls	=> 'list',
 }
 
 sub init {
