@@ -8,18 +8,18 @@ Perl Deps:
 Usage
 -----
 Request visualization:
-$remoteViz req
-$remoteViz req -g 800x600 -d "Project X"
+- $remoteViz req
+- $remoteViz req -g 800x600 -d "Project X"
 
 Listing vnc session:
-$remoteViz list
-$remoteViz ls
+- $remoteViz list
+- $remoteViz ls
 
-ID	Port	Geometry	Description
-==================================================
-1	5901	800x600 	none 
-2	5902	800x600 	Project X
+ ID	Port	Geometry	Description
+ ==================================================
+ 1	5901	800x600 	none 
+ 2	5902	800x600 	Project X
 
 Stop session:
-$remoteViz stop [id]
+- $remoteViz stop [id]
 
