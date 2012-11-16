@@ -24,3 +24,6 @@ Listing vnc session:
 Stop session:
 - $remoteViz stop [id]
 
+Run , vglrun wrapper:
+- $remoteViz run glxgears
+
