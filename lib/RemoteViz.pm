@@ -17,6 +17,9 @@ console             run interactively
 cmd-list            list available commands
 req                 request visualization
 set                 set password
+ls					list session
+stop				stop / kill session
+run					run an application
     
 EOF
 }
@@ -50,6 +53,7 @@ sub command_map {
     set			=> 'RemoteViz::Command::Set',
     list		=> 'RemoteViz::Command::List',
     stop		=> 'RemoteViz::Command::Stop',
+    run			=> 'RemoteViz::Command::Run',
 }
 
 sub command_alias {
