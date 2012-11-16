@@ -68,6 +68,9 @@ sub set_vncserver{
 	
 	my ($geometry, $description) = @_;
 	
+	#root can't request vnc
+	say "root not allowed to request" and exit 255 if $self->is_root();
+	
 	#check if vnc passwd file is exist
 	$self->check_passwd();
 	
@@ -92,14 +95,19 @@ sub stop_vnc{
 	
 	my $conf = $self->globalcfg;
 	my $vncserver = "$$conf{turbovnc}/bin/vncserver";
-	my $cmd = `$vncserver -kill :$id`;
-
+	my $cmd;
+	if($self->is_root()){
+		$cmd = `$vncserver -kill :$id`;
+	}else{
+		$cmd = `$vncserver -kill :$id`;
+	}
 }
 
 sub list_vnc{
 	my $self = shift;
 	
-	my $cmd = `ps x -o command | grep 'desktop Novaglobal' | grep -v grep`;
+	my $conf = $self->globalcfg;
+	my $cmd = `ps x -o command | grep "desktop $$conf{prefixname}" | grep -v grep`;
 	print "no visualization detected\n" and exit 1 unless $cmd;
 	my @vnc = split '\n' => $cmd;
 	
