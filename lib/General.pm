@@ -47,4 +47,16 @@ sub getGlobalConfig{
 	return \%config;
 }
 
+sub is_root{
+	my $self = shift;
+	
+	my $user = `whoami`;
+	chomp $user;
+	if($user eq 'root'){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
 1;
