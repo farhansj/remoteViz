@@ -1,5 +1,6 @@
-remoteViz
-=========
+remoteViz - Interface for Remote Visualization 
+			using VirtualGL & TurboVNC backend
+==============================================
 
 Perl Deps:
 - v5.16.1
